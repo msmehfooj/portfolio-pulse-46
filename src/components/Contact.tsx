@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Send, Github, Linkedin, Twitter } from 'lucide-react';
+import { Send, Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,6 +40,7 @@ const Contact: React.FC = () => {
     { name: 'GitHub', icon: Github, url: 'https://github.com/mehfoojkkhan' },
     { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/mehfoojkkhan' },
     { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/mehfoojkkhan' },
+    { name: 'Email', icon: Mail, url: 'mailto:hello@mehfoojkhan.com' },
   ];
   
   return (
@@ -158,7 +159,7 @@ const Contact: React.FC = () => {
             <div className="bg-muted/30 border rounded-xl p-6">
               <h3 className="text-xl font-semibold mb-4">Open to Opportunities</h3>
               <p className="text-muted-foreground">
-                I'm currently available for freelance work, collaboration, or full-time remote positions.
+                I'm currently available for freelance work, collaboration, or full-time remote positions in Python development and backend systems.
               </p>
             </div>
           </div>

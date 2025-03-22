@@ -6,26 +6,107 @@ import { useGithubRepositories } from '@/lib/github';
 import { Button } from '@/components/ui/button';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 
+// Sample projects to display when GitHub API fails
+const fallbackProjects = [
+  {
+    id: 1,
+    name: "Python API Service",
+    description: "A RESTful API service built with Flask providing data analytics endpoints.",
+    html_url: "https://github.com/yourusername/python-api-service",
+    homepage: "https://api-service-demo.com",
+    stargazers_count: 12,
+    forks_count: 5,
+    topics: ["python", "flask", "api", "rest"],
+    language: "Python",
+    image: "/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png"
+  },
+  {
+    id: 2,
+    name: "SQL Data Analyzer",
+    description: "A tool for analyzing SQL data and generating insights through visualizations.",
+    html_url: "https://github.com/yourusername/sql-data-analyzer",
+    homepage: "",
+    stargazers_count: 8,
+    forks_count: 2,
+    topics: ["python", "sql", "data-analysis", "visualization"],
+    language: "Python",
+    image: "/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png"
+  },
+  {
+    id: 3,
+    name: "ML Model Trainer",
+    description: "A simple machine learning model training pipeline with easy configuration.",
+    html_url: "https://github.com/yourusername/ml-model-trainer",
+    homepage: "https://ml-trainer-demo.com",
+    stargazers_count: 15,
+    forks_count: 3,
+    topics: ["python", "machine-learning", "ml", "training"],
+    language: "Python",
+    image: "/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png"
+  },
+  {
+    id: 4,
+    name: "Cloud Deployment Tool",
+    description: "Automate deployment of Python applications to cloud environments.",
+    html_url: "https://github.com/yourusername/cloud-deployment-tool",
+    homepage: "",
+    stargazers_count: 7,
+    forks_count: 1,
+    topics: ["python", "cloud", "deployment", "automation"],
+    language: "Python",
+    image: "/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png"
+  },
+  {
+    id: 5,
+    name: "Web Scraper Framework",
+    description: "A robust framework for building web scrapers with built-in rate limiting and proxy support.",
+    html_url: "https://github.com/yourusername/web-scraper-framework",
+    homepage: "",
+    stargazers_count: 11,
+    forks_count: 4,
+    topics: ["python", "web-scraping", "automation", "data-collection"],
+    language: "Python",
+    image: "/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png"
+  },
+  {
+    id: 6,
+    name: "Authentication Service",
+    description: "A reusable authentication service with support for multiple authentication methods.",
+    html_url: "https://github.com/yourusername/authentication-service",
+    homepage: "https://auth-service-demo.com",
+    stargazers_count: 9,
+    forks_count: 2,
+    topics: ["python", "authentication", "security", "api"],
+    language: "Python",
+    image: "/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png"
+  }
+];
+
 const Projects: React.FC = () => {
   const { repositories, isLoading, error } = useGithubRepositories();
   const [visibleProjects, setVisibleProjects] = useState(6);
   const { ref, isVisible } = useScrollAnimation();
   const [activeFilter, setActiveFilter] = useState('All Projects');
   
+  // Use fallback projects if the GitHub API fails
+  const allProjects = repositories.length > 0 ? repositories : fallbackProjects;
+  
   const filters = [
     'All Projects',
     'Featured',
-    'AI Projects',
-    'Web Development'
+    'Backend',
+    'Data',
+    'Machine Learning'
   ];
   
   // Filter projects based on selected filter
-  const filteredProjects = repositories
+  const filteredProjects = allProjects
     .filter(repo => {
       if (activeFilter === 'All Projects') return true;
       if (activeFilter === 'Featured') return repo.stargazers_count > 0;
-      if (activeFilter === 'AI Projects') return repo.topics?.includes('ai') || repo.topics?.includes('machine-learning');
-      if (activeFilter === 'Web Development') return repo.topics?.includes('web') || repo.topics?.includes('frontend') || repo.topics?.includes('backend');
+      if (activeFilter === 'Backend') return repo.topics?.includes('api') || repo.topics?.includes('backend') || repo.topics?.includes('flask');
+      if (activeFilter === 'Data') return repo.topics?.includes('data') || repo.topics?.includes('sql') || repo.topics?.includes('analysis');
+      if (activeFilter === 'Machine Learning') return repo.topics?.includes('ml') || repo.topics?.includes('machine-learning');
       return true;
     })
     .slice(0, visibleProjects);
@@ -34,16 +115,16 @@ const Projects: React.FC = () => {
     setVisibleProjects(prev => prev + 3);
   };
   
-  // Define sample project images for demonstration
+  // Define project images for demonstration
   const projectImages = [
     '/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png',
     '/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png',
     '/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png',
   ];
   
-  // Function to get an image based on repo index
-  const getImageForRepo = (index: number) => {
-    return projectImages[index % projectImages.length];
+  // Function to get an image based on repo index or from repo object
+  const getImageForRepo = (repo: any, index: number) => {
+    return repo.image || projectImages[index % projectImages.length];
   };
   
   if (isLoading) {
@@ -56,19 +137,6 @@ const Projects: React.FC = () => {
               <div className="h-4 w-48 bg-muted rounded"></div>
             </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-  
-  if (error) {
-    return (
-      <section className="section-padding">
-        <div className="container mx-auto max-w-6xl text-center">
-          <h2 className="text-3xl font-bold mb-4">My Latest Work</h2>
-          <p className="text-muted-foreground">
-            Unable to load projects. Please check back later.
-          </p>
         </div>
       </section>
     );
@@ -87,8 +155,8 @@ const Projects: React.FC = () => {
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">My Latest Work</h2>
           <p className="text-muted-foreground max-w-2xl">
-            Here's a collection of my recent projects that showcase my skills in AI, web development, and more.
-            Each project represents a unique problem solved with creativity and technical expertise.
+            Here's a collection of my recent projects that showcase my skills in Python development, backend systems,
+            and data analysis. Each project represents a unique solution to real-world problems.
           </p>
           
           {/* Project filters */}
@@ -131,7 +199,7 @@ const Projects: React.FC = () => {
                   {/* Project image */}
                   <div className="relative overflow-hidden h-48">
                     <img 
-                      src={getImageForRepo(index)} 
+                      src={getImageForRepo(repo, index)} 
                       alt={repo.name} 
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
@@ -220,7 +288,7 @@ const Projects: React.FC = () => {
           )}
         </div>
         
-        {repositories.length > visibleProjects && (
+        {allProjects.length > visibleProjects && (
           <div className="mt-12 text-center">
             <Button 
               onClick={loadMore}

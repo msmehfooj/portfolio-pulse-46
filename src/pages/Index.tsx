@@ -11,7 +11,7 @@ import Footer from '@/components/Footer';
 
 const Index: React.FC = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen home-page">
       <Hero />
       <About />
       <Timeline />

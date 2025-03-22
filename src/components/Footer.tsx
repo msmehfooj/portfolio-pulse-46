@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Github, Linkedin, Twitter, Mail } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -9,6 +9,13 @@ const Footer: React.FC = () => {
   };
   
   const currentYear = new Date().getFullYear();
+  
+  const socialLinks = [
+    { name: 'GitHub', icon: Github, url: 'https://github.com/mehfoojkkhan' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/mehfoojkkhan' },
+    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/mehfoojkkhan' },
+    { name: 'Email', icon: Mail, url: 'mailto:hello@mehfoojkhan.com' },
+  ];
   
   return (
     <footer className="py-12 px-6 border-t">
@@ -19,8 +26,25 @@ const Footer: React.FC = () => {
               mehfooj.
             </Link>
             <p className="text-sm text-muted-foreground mt-2">
-              Building AI solutions and backend systems
+              Python developer specializing in backend development
             </p>
+          </div>
+          
+          <div className="flex flex-col items-center md:items-end mb-6 md:mb-0">
+            <div className="flex space-x-3 mb-4">
+              {socialLinks.map(social => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-secondary/50 hover:bg-primary/10 transition-colors duration-300"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
           
           <div className="flex flex-col items-center md:items-end">

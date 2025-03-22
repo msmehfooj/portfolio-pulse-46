@@ -10,39 +10,43 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  // AI category
-  { name: 'Machine Learning', category: 'AI', level: 'intermediate' },
-  { name: 'TensorFlow', category: 'AI', level: 'intermediate' },
-  { name: 'PyTorch', category: 'AI', level: 'beginner' },
-  { name: 'Computer Vision', category: 'AI', level: 'beginner' },
-  { name: 'NLP', category: 'AI', level: 'beginner' },
+  // Programming category
+  { name: 'Python', category: 'Programming', level: 'advanced' },
+  { name: 'Flask', category: 'Programming', level: 'intermediate' },
+  { name: 'API Development', category: 'Programming', level: 'intermediate' },
   
-  // Backend category
-  { name: 'Python', category: 'Backend', level: 'advanced' },
-  { name: 'Django', category: 'Backend', level: 'intermediate' },
-  { name: 'Flask', category: 'Backend', level: 'intermediate' },
-  { name: 'FastAPI', category: 'Backend', level: 'intermediate' },
-  { name: 'SQL', category: 'Backend', level: 'intermediate' },
-  { name: 'MongoDB', category: 'Backend', level: 'beginner' },
+  // Data & Databases category
+  { name: 'SQL', category: 'Data & Databases', level: 'intermediate' },
+  { name: 'MySQL', category: 'Data & Databases', level: 'intermediate' },
+  { name: 'PostgreSQL', category: 'Data & Databases', level: 'beginner' },
+  { name: 'Data Analysis', category: 'Data & Databases', level: 'intermediate' },
   
-  // Cloud category
-  { name: 'Google Cloud', category: 'Cloud', level: 'intermediate' },
-  { name: 'AWS', category: 'Cloud', level: 'beginner' },
-  { name: 'Docker', category: 'Cloud', level: 'intermediate' },
-  { name: 'Kubernetes', category: 'Cloud', level: 'beginner' },
+  // Machine Learning category
+  { name: 'ML Concepts', category: 'Machine Learning', level: 'intermediate' },
+  { name: 'Model Training', category: 'Machine Learning', level: 'beginner' },
   
-  // API category
-  { name: 'REST API', category: 'API', level: 'advanced' },
-  { name: 'GraphQL', category: 'API', level: 'intermediate' },
-  { name: 'Postman', category: 'API', level: 'advanced' },
-  { name: 'API Testing', category: 'API', level: 'advanced' },
+  // Backend Development category
+  { name: 'REST APIs', category: 'Backend Development', level: 'advanced' },
+  { name: 'Authentication', category: 'Backend Development', level: 'intermediate' },
+  { name: 'Web Scraping', category: 'Backend Development', level: 'intermediate' },
+  
+  // Problem-Solving category
+  { name: 'Algorithmic Thinking', category: 'Problem-Solving', level: 'advanced' },
+  { name: 'Debugging', category: 'Problem-Solving', level: 'advanced' },
+  
+  // Cloud & DevOps category
+  { name: 'Google Cloud', category: 'Cloud & DevOps', level: 'intermediate' },
+  { name: 'AWS', category: 'Cloud & DevOps', level: 'beginner' },
+  { name: 'Deployment', category: 'Cloud & DevOps', level: 'intermediate' },
 ];
 
 const categoryColors: Record<string, string> = {
-  'AI': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
-  'Backend': 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800',
-  'Cloud': 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800',
-  'API': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800',
+  'Programming': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
+  'Data & Databases': 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800',
+  'Machine Learning': 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800',
+  'Backend Development': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800',
+  'Problem-Solving': 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800',
+  'Cloud & DevOps': 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800',
 };
 
 const levelIndicator: Record<string, { icon: string, color: string }> = {

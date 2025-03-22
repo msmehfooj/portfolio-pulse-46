@@ -59,7 +59,7 @@ const Hero: React.FC = () => {
             className="opacity-0 transform translate-y-8 transition-all duration-1000 ease-out mb-6"
           >
             <p className="text-sm tracking-widest text-muted-foreground uppercase font-mono">
-              PYTHON DEVELOPER | LEARNING ML & CLOUD
+              PYTHON DEVELOPER
             </p>
           </div>
           
@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
             ref={textRef}
             className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty"
           >
-            I'm a Python developer exploring AI, DevOps, and Cloud, building automation and backend systems that make a difference.
+            I'm Mehfooj, a Python developer passionate about backend development, machine learning, cloud computing, and problem-solving.
           </p>
           
           <div 
