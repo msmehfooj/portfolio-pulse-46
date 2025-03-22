@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ExternalLink, Github, Star, GitFork } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGithubRepositories } from '@/lib/github';
@@ -86,6 +86,18 @@ const Projects = () => {
   const [visibleProjects, setVisibleProjects] = useState(6);
   const { ref, isVisible } = useScrollAnimation();
   const [activeFilter, setActiveFilter] = useState('All Projects');
+  // Add this state to ensure projects are always visible once loaded
+  const [forceVisible, setForceVisible] = useState(false);
+  
+  // Use effect to force visibility after component mounts
+  useEffect(() => {
+    // Set a short timeout to allow the page to settle
+    const timer = setTimeout(() => {
+      setForceVisible(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   // Always use your actual projects instead of GitHub API data
   const allProjects = myProjects;
@@ -134,12 +146,15 @@ const Projects = () => {
     );
   }
   
+  // Use forceVisible OR isVisible to determine visibility
+  const shouldBeVisible = forceVisible || isVisible;
+  
   return (
     <section 
       ref={ref}
       className={cn(
         "section-padding",
-        isVisible ? "opacity-100" : "opacity-0 translate-y-10"
+        shouldBeVisible ? "opacity-100" : "opacity-0 translate-y-10"
       )}
       style={{ transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}
     >
@@ -174,8 +189,8 @@ const Projects = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((repo, index) => {
-              // Create staggered animation delays
-              const animationDelay = isVisible ? `${(index % 20) * 100}ms` : '0ms';
+              // Create staggered animation delays - but only if not forced visible
+              const animationDelay = shouldBeVisible ? `${Math.min((index % 20) * 100, 500)}ms` : '0ms';
               
               return (
                 <div
@@ -183,8 +198,8 @@ const Projects = () => {
                   className="bg-card border rounded-xl overflow-hidden group transition-all duration-300 hover:shadow-md flex flex-col h-full"
                   style={{ 
                     animationDelay,
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                    opacity: shouldBeVisible ? 1 : 0,
+                    transform: shouldBeVisible ? 'translateY(0)' : 'translateY(20px)',
                     transition: `opacity 0.5s ease-out ${animationDelay}, transform 0.5s ease-out ${animationDelay}` 
                   }}
                 >
