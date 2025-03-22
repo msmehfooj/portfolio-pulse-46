@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { ExternalLink, Github, Star, GitFork } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import useScrollAnimation from '@/hooks/useScrollAnimation';
 
 const myProjects = [
   {
@@ -81,6 +84,7 @@ const myProjects = [
 const Projects = () => {
   const [visibleProjects, setVisibleProjects] = useState(6);
   const [activeFilter, setActiveFilter] = useState('All Projects');
+  const { ref, isVisible } = useScrollAnimation();
   
   const filters = ['All Projects', 'AI', 'Web Development', 'Data Analysis', 'Automation'];
   
@@ -94,33 +98,113 @@ const Projects = () => {
   }).slice(0, visibleProjects);
   
   return (
-    <section className="section-padding">
-      <h2 className="text-center text-3xl font-bold">My Projects</h2>
-      <div className="flex justify-center gap-4 my-4">
-        {filters.map(filter => (
-          <Button key={filter} onClick={() => setActiveFilter(filter)} className={cn(activeFilter === filter ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-900')}>
-            {filter}
-          </Button>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProjects.map(repo => (
-          <div key={repo.id} className="p-4 border rounded-lg shadow bg-white dark:bg-gray-900">
-            <img src={repo.image} alt={repo.name} className="w-full h-40 object-cover rounded-md" />
-            <h3 className="text-xl font-semibold mt-2 text-gray-800 dark:text-white">{repo.name}</h3>
-            <p className="text-gray-600 dark:text-gray-400">{repo.description}</p>
-            <div className="flex items-center justify-between mt-2">
-              <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center">
-                <Github size={16} className="mr-1" /> Repo
-              </a>
-              {repo.homepage && (
-                <a href={repo.homepage} target="_blank" rel="noopener noreferrer" className="text-green-500 flex items-center">
-                  <ExternalLink size={16} className="mr-1" /> Live
-                </a>
+    <section ref={ref as React.RefObject<HTMLDivElement>} className={cn(
+      "section-padding transition-all duration-1000",
+      isVisible ? "opacity-100" : "opacity-0 translate-y-10"
+    )}>
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-12 text-center">
+          <span className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag neo-effect px-3 py-1">Portfolio</span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">My Projects</h2>
+        </div>
+        
+        <div className="flex justify-center flex-wrap gap-3 my-6">
+          {filters.map(filter => (
+            <Button 
+              key={filter} 
+              onClick={() => setActiveFilter(filter)} 
+              variant={activeFilter === filter ? "default" : "outline"} 
+              className={cn(
+                "rounded-full text-sm font-medium transition-all",
+                activeFilter === filter ? "bg-primary text-primary-foreground" : "hover:bg-secondary/80"
               )}
-            </div>
-          </div>
-        ))}
+            >
+              {filter}
+            </Button>
+          ))}
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filteredProjects.map(repo => {
+            const { ref: cardRef, isVisible: cardIsVisible } = useScrollAnimation();
+            
+            return (
+              <div 
+                key={repo.id} 
+                ref={cardRef as React.RefObject<HTMLDivElement>}
+                className={cn(
+                  "bg-card rounded-xl overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-md hover:border-border/80 h-full flex flex-col",
+                  cardIsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}
+              >
+                <div className="relative aspect-video w-full overflow-hidden bg-muted">
+                  <img 
+                    src={repo.image} 
+                    alt={repo.name} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                  />
+                </div>
+                
+                <div className="p-5 flex-grow flex flex-col">
+                  <h3 className="text-xl font-semibold mb-2 text-foreground">{repo.name}</h3>
+                  <p className="text-muted-foreground text-sm mb-4">{repo.description}</p>
+                  
+                  <div className="mt-auto">
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {repo.topics.slice(0, 3).map(topic => (
+                        <Badge key={topic} variant="secondary" className="text-xs font-normal">
+                          {topic}
+                        </Badge>
+                      ))}
+                      {repo.topics.length > 3 && (
+                        <Badge variant="outline" className="text-xs font-normal">
+                          +{repo.topics.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-between pt-3 border-t border-border/30">
+                      <div className="flex items-center space-x-3">
+                        <div className="flex items-center text-muted-foreground text-xs">
+                          <Star size={14} className="mr-1" /> 
+                          <span>{repo.stargazers_count}</span>
+                        </div>
+                        <div className="flex items-center text-muted-foreground text-xs">
+                          <GitFork size={14} className="mr-1" /> 
+                          <span>{repo.forks_count}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <a 
+                          href={repo.html_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          aria-label={`View ${repo.name} repository on GitHub`}
+                        >
+                          <Github size={18} />
+                        </a>
+                        
+                        {repo.homepage && (
+                          <a 
+                            href={repo.homepage} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-muted-foreground hover:text-primary transition-colors"
+                            aria-label={`View live demo for ${repo.name}`}
+                          >
+                            <ExternalLink size={18} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

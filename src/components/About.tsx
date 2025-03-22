@@ -28,34 +28,15 @@ const About: React.FC = () => {
               I am a Python developer passionate about backend development, machine learning, cloud computing, and problem-solving. My focus is on building robust APIs, data analysis tools, and backend systems.
             </p>
             
-            <p className="text-muted-foreground text-pretty">
-              With a background in software development, I'm constantly exploring new technologies and methodologies to create efficient, scalable solutions that solve real-world problems.
+            <p className="text-muted-foreground text-pretty italic">
+              With a background in software development, I'm exploring new technologies to create efficient solutions.
             </p>
-            
-            <div className="pt-4">
-              <h3 className="text-lg font-medium mb-4">Highlights</h3>
-              <ul className="space-y-3">
-                {[
-                  "Y Combinator Startup School Fellow",
-                  "Postman Student Expert (API Design, Testing, Automation)",
-                  "Google Cloud Arcade Facilitator"
-                ].map((item, index) => (
-                  <li 
-                    key={index} 
-                    className="flex items-start"
-                  >
-                    <span className="inline-block h-2 w-2 rounded-full bg-primary mt-2 mr-3"></span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
           
           <div 
             ref={imageRef as React.RefObject<HTMLDivElement>}
             className={cn(
-              "relative rounded-2xl overflow-hidden aspect-square md:aspect-[4/5] transition-all duration-1000",
+              "relative rounded-2xl overflow-hidden aspect-square transition-all duration-1000",
               imageIsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >

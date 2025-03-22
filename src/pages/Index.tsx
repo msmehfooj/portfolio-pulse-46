@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Timeline from '@/components/Timeline';
@@ -10,6 +10,16 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
 const Index: React.FC = () => {
+  useEffect(() => {
+    // Add grid pattern to the home page
+    document.body.classList.add('home-grid-pattern');
+    
+    // Cleanup function to remove the class when navigating away
+    return () => {
+      document.body.classList.remove('home-grid-pattern');
+    };
+  }, []);
+  
   return (
     <div className="min-h-screen home-page">
       <Hero />

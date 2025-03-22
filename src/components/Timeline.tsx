@@ -14,20 +14,32 @@ const timelineItems: TimelineItem[] = [
   {
     id: 1,
     title: 'Y Combinator Startup School Fellow',
-    date: '2022 - Present',
-    description: 'Participated in Y Combinator\'s Startup School program, learning about entrepreneurship and startup development.'
+    date: '2024',
+    description: 'Participated in Y Combinator\'s Startup School program, gaining insights into entrepreneurship, lean startup methodologies, and scaling strategies. Explored AI-driven startup ideas and networked with industry experts.'
   },
   {
     id: 2,
     title: 'Postman Student Expert',
-    date: '2021 - Present',
-    description: 'Expertise in API design, testing, and automation using Postman.'
+    date: '2024 - Present',
+    description: 'Certified Postman Student Expert, specializing in API design, testing, and automation. Worked on real-world API integration projects, focusing on efficiency and security. Developed and tested APIs for AI-powered applications.'
   },
   {
     id: 3,
     title: 'Google Cloud Arcade Facilitator',
-    date: '2020 - 2021',
-    description: 'Led workshops and training sessions on Google Cloud Platform technologies.'
+    date: '2023 - 2024',
+    description: 'Led Google Cloud Arcade workshops on Cloud Computing, AI, and DevOps. Conducted hands-on training on Google Cloud services, APIs, and containerized applications. Explored deploying LLMs and AI models on Google Cloud.'
+  },
+  {
+    id: 4,
+    title: 'Data Analytics & Machine Learning',
+    date: '2024 - Present',
+    description: 'Built data analytics projects using pandas, NumPy, and Matplotlib. Gained experience in machine learning basics, model training, and AI applications. Developed an AI-powered data visualization tool for pattern analysis.'
+  },
+  {
+    id: 5,
+    title: 'Open Source Contributor',
+    date: '2024',
+    description: 'Contributed to open-source AI, web development, and automation projects. Maintained 67+ repositories on GitHub, covering Flask APIs, Python automation, and AI tools. Actively participated in collaborative software development with the global tech community.'
   }
 ];
 

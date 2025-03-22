@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600&display=swap');
 
@@ -82,6 +81,10 @@
   body {
     @apply bg-background text-foreground antialiased tracking-tight selection:bg-primary/10 selection:text-primary;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+  
+  /* Add grid pattern only to the home page */
+  body.home-grid-pattern {
     background-image: linear-gradient(rgba(30, 30, 30, 0.1) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(30, 30, 30, 0.1) 1px, transparent 1px);
     background-size: 60px 60px;
@@ -216,14 +219,42 @@
 
 /* Project card styles */
 .project-card {
-  @apply bg-card border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg;
+  @apply bg-card border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/20;
 }
 
 .project-card-image {
-  @apply w-full h-48 object-cover object-center;
+  @apply w-full h-48 object-cover object-center transition-transform duration-500 hover:scale-105;
 }
 
 .project-tag {
-  @apply text-xs px-2 py-1 rounded-full border text-muted-foreground mr-2 mb-2 inline-block;
+  @apply text-xs px-2 py-1 rounded-full border border-border/50 text-muted-foreground mr-2 mb-2 inline-block hover:border-primary/30 transition-colors;
 }
 
+/* Add Badge component styles if it doesn't exist elsewhere */
+.badge {
+  @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+}
+
+.badge-secondary {
+  @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+}
+
+.badge-outline {
+  @apply border-border text-foreground;
+}
+
+/* Animation for resume download button */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

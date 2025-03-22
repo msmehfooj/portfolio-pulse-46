@@ -1,13 +1,12 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, ArrowDown } from 'lucide-react';
+import { ArrowRight, FileText, ArrowDown, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const Hero: React.FC = () => {
   // Refs for the elements we want to animate
-  const subtitleRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -23,9 +22,6 @@ const Hero: React.FC = () => {
     };
     
     // Run animations with staggered timing
-    if (subtitleRef.current) {
-      animate(subtitleRef.current, 200);
-    }
     if (headlineRef.current) {
       animate(headlineRef.current, 300);
     }
@@ -40,8 +36,17 @@ const Hero: React.FC = () => {
     }
   }, []);
   
+  // Animation for resume download
+  const handleResumeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const button = e.currentTarget;
+    button.classList.add('animate-pulse');
+    setTimeout(() => {
+      button.classList.remove('animate-pulse');
+    }, 1000);
+  };
+  
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[calc(100vh-6rem)] flex items-center justify-center overflow-hidden">
       {/* Background Elements */}
       <div 
         ref={backgroundRef}
@@ -52,17 +57,8 @@ const Hero: React.FC = () => {
         <div className="absolute bottom-[-200px] right-[-300px] w-[600px] h-[600px] bg-gradient-to-tr from-primary/5 to-transparent rounded-full filter blur-3xl"></div>
       </div>
       
-      <div className="container max-w-4xl mx-auto px-6 z-10">
+      <div className="container max-w-4xl mx-auto px-6 z-10 pt-10">
         <div className="text-center">
-          <div 
-            ref={subtitleRef}
-            className="opacity-0 transform translate-y-8 transition-all duration-1000 ease-out mb-6"
-          >
-            <p className="text-sm tracking-widest text-muted-foreground uppercase font-mono">
-              PYTHON DEVELOPER
-            </p>
-          </div>
-          
           <h1 
             ref={headlineRef}
             className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance"
@@ -98,8 +94,13 @@ const Hero: React.FC = () => {
               className="group rounded-full px-6 animated-button"
               asChild
             >
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FileText className="mr-2 h-4 w-4" />
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={handleResumeClick}
+              >
+                <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
                 Resume
               </a>
             </Button>
