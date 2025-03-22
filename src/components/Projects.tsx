@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ExternalLink, Github, Star, GitFork } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -6,107 +5,107 @@ import { useGithubRepositories } from '@/lib/github';
 import { Button } from '@/components/ui/button';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 
-// Sample projects to display when GitHub API fails
-const fallbackProjects = [
+// Your actual projects to display when GitHub API fails or as fallback
+const myProjects = [
   {
     id: 1,
-    name: "Python API Service",
-    description: "A RESTful API service built with Flask providing data analytics endpoints.",
-    html_url: "https://github.com/yourusername/python-api-service",
-    homepage: "https://api-service-demo.com",
+    name: "AI Text Summarizer App",
+    description: "NLP-powered AI summarization tool that condenses long articles and documents into concise summaries.",
+    html_url: "https://github.com/yourusername/ai-text-summarizer",
+    homepage: "https://ai-summarizer-demo.com",
     stargazers_count: 12,
     forks_count: 5,
-    topics: ["python", "flask", "api", "rest"],
+    topics: ["ai", "nlp", "python", "flask"],
     language: "Python",
     image: "/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png"
   },
   {
     id: 2,
-    name: "SQL Data Analyzer",
-    description: "A tool for analyzing SQL data and generating insights through visualizations.",
-    html_url: "https://github.com/yourusername/sql-data-analyzer",
+    name: "MonkeyType Bot",
+    description: "Selenium-based bot automation that demonstrates web automation capabilities for typing tests.",
+    html_url: "https://github.com/yourusername/monkeytype-bot",
     homepage: "",
     stargazers_count: 8,
     forks_count: 2,
-    topics: ["python", "sql", "data-analysis", "visualization"],
+    topics: ["selenium", "python", "automation"],
     language: "Python",
     image: "/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png"
   },
   {
     id: 3,
-    name: "ML Model Trainer",
-    description: "A simple machine learning model training pipeline with easy configuration.",
-    html_url: "https://github.com/yourusername/ml-model-trainer",
-    homepage: "https://ml-trainer-demo.com",
+    name: "FCC Advanced Data Analysis",
+    description: "Python-based data analysis project using scientific libraries to extract meaningful insights from datasets.",
+    html_url: "https://github.com/yourusername/fcc-data-analysis",
+    homepage: "https://fcc-data-analysis-demo.com",
     stargazers_count: 15,
     forks_count: 3,
-    topics: ["python", "machine-learning", "ml", "training"],
+    topics: ["python", "data-analysis", "pandas", "matplotlib"],
     language: "Python",
     image: "/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png"
   },
   {
     id: 4,
-    name: "Cloud Deployment Tool",
-    description: "Automate deployment of Python applications to cloud environments.",
-    html_url: "https://github.com/yourusername/cloud-deployment-tool",
-    homepage: "",
+    name: "Weather Forecast App",
+    description: "Web app integrating OpenWeatherMap API to provide real-time weather information and forecasts.",
+    html_url: "https://github.com/yourusername/weather-forecast-app",
+    homepage: "https://weather-app-demo.com",
     stargazers_count: 7,
     forks_count: 1,
-    topics: ["python", "cloud", "deployment", "automation"],
-    language: "Python",
+    topics: ["javascript", "api", "web-development"],
+    language: "JavaScript",
     image: "/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png"
   },
   {
     id: 5,
-    name: "Web Scraper Framework",
-    description: "A robust framework for building web scrapers with built-in rate limiting and proxy support.",
-    html_url: "https://github.com/yourusername/web-scraper-framework",
+    name: "Jovian Job App",
+    description: "Job finder application built with Flask & Jinja templates to help users discover and apply for opportunities.",
+    html_url: "https://github.com/yourusername/jovian-job-app",
     homepage: "",
     stargazers_count: 11,
     forks_count: 4,
-    topics: ["python", "web-scraping", "automation", "data-collection"],
+    topics: ["flask", "python", "jinja", "web"],
     language: "Python",
     image: "/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png"
   },
   {
     id: 6,
-    name: "Authentication Service",
-    description: "A reusable authentication service with support for multiple authentication methods.",
-    html_url: "https://github.com/yourusername/authentication-service",
-    homepage: "https://auth-service-demo.com",
+    name: "AI Agent",
+    description: "Ongoing development of a personal AI assistant capable of handling various tasks through natural language processing.",
+    html_url: "https://github.com/yourusername/ai-agent",
+    homepage: "https://ai-agent-demo.com",
     stargazers_count: 9,
     forks_count: 2,
-    topics: ["python", "authentication", "security", "api"],
+    topics: ["ai", "llm", "python", "nlp"],
     language: "Python",
     image: "/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png"
   }
 ];
 
-const Projects: React.FC = () => {
+const Projects = () => {
   const { repositories, isLoading, error } = useGithubRepositories();
   const [visibleProjects, setVisibleProjects] = useState(6);
   const { ref, isVisible } = useScrollAnimation();
   const [activeFilter, setActiveFilter] = useState('All Projects');
   
-  // Use fallback projects if the GitHub API fails
-  const allProjects = repositories.length > 0 ? repositories : fallbackProjects;
+  // Always use your actual projects instead of GitHub API data
+  const allProjects = myProjects;
   
   const filters = [
     'All Projects',
-    'Featured',
-    'Backend',
-    'Data',
-    'Machine Learning'
+    'AI',
+    'Web Development',
+    'Data Analysis',
+    'Automation'
   ];
   
   // Filter projects based on selected filter
   const filteredProjects = allProjects
     .filter(repo => {
       if (activeFilter === 'All Projects') return true;
-      if (activeFilter === 'Featured') return repo.stargazers_count > 0;
-      if (activeFilter === 'Backend') return repo.topics?.includes('api') || repo.topics?.includes('backend') || repo.topics?.includes('flask');
-      if (activeFilter === 'Data') return repo.topics?.includes('data') || repo.topics?.includes('sql') || repo.topics?.includes('analysis');
-      if (activeFilter === 'Machine Learning') return repo.topics?.includes('ml') || repo.topics?.includes('machine-learning');
+      if (activeFilter === 'AI') return repo.topics?.includes('ai') || repo.topics?.includes('nlp');
+      if (activeFilter === 'Web Development') return repo.topics?.includes('web') || repo.topics?.includes('web-development') || repo.topics?.includes('flask');
+      if (activeFilter === 'Data Analysis') return repo.topics?.includes('data-analysis') || repo.topics?.includes('pandas') || repo.topics?.includes('matplotlib');
+      if (activeFilter === 'Automation') return repo.topics?.includes('automation') || repo.topics?.includes('selenium');
       return true;
     })
     .slice(0, visibleProjects);
@@ -115,16 +114,9 @@ const Projects: React.FC = () => {
     setVisibleProjects(prev => prev + 3);
   };
   
-  // Define project images for demonstration
-  const projectImages = [
-    '/lovable-uploads/07b2232a-a2fb-4cb3-a1f9-20c084bb9203.png',
-    '/lovable-uploads/b6acd2b6-e9ee-40b0-8aa4-f83a68a46935.png',
-    '/lovable-uploads/d89ab004-689a-4261-b010-f145204415d3.png',
-  ];
-  
-  // Function to get an image based on repo index or from repo object
-  const getImageForRepo = (repo: any, index: number) => {
-    return repo.image || projectImages[index % projectImages.length];
+  // Project images are already included in the project objects
+  const getImageForRepo = (repo) => {
+    return repo.image;
   };
   
   if (isLoading) {
@@ -144,7 +136,7 @@ const Projects: React.FC = () => {
   
   return (
     <section 
-      ref={ref as React.RefObject<HTMLDivElement>}
+      ref={ref}
       className={cn(
         "section-padding",
         isVisible ? "opacity-100" : "opacity-0 translate-y-10"
@@ -155,7 +147,7 @@ const Projects: React.FC = () => {
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">My Latest Work</h2>
           <p className="text-muted-foreground max-w-2xl">
-            Here's a collection of my recent projects that showcase my skills in Python development, backend systems,
+            Here's a collection of my projects that showcase my skills in AI, Python development, web systems,
             and data analysis. Each project represents a unique solution to real-world problems.
           </p>
           
@@ -199,7 +191,7 @@ const Projects: React.FC = () => {
                   {/* Project image */}
                   <div className="relative overflow-hidden h-48">
                     <img 
-                      src={getImageForRepo(repo, index)} 
+                      src={getImageForRepo(repo)} 
                       alt={repo.name} 
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
@@ -237,13 +229,13 @@ const Projects: React.FC = () => {
                     </h3>
                     
                     <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                      {repo.description || "An innovative solution built with modern technologies."}
+                      {repo.description}
                     </p>
                     
                     {/* Tech tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {repo.topics && repo.topics.length > 0 ? (
-                        repo.topics.slice(0, 3).map(topic => (
+                        repo.topics.slice(0, 4).map(topic => (
                           <span 
                             key={topic} 
                             className="text-xs px-2 py-1 rounded-full border text-muted-foreground"
@@ -283,7 +275,7 @@ const Projects: React.FC = () => {
             })
           ) : (
             <div className="col-span-full text-center py-12">
-              <p className="text-lg text-muted-foreground">No projects found</p>
+              <p className="text-lg text-muted-foreground">No projects found matching the selected filter</p>
             </div>
           )}
         </div>
