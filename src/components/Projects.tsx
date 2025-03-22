@@ -17,7 +17,7 @@ const myProjects = [
     forks_count: 5,
     topics: ["AI", "NLP", "Python", "Flask"],
     language: "Python",
-    image: "/assets/projects/ai-text-summarizer.png"
+    image: "/lovable-uploads/7674335c-d7ae-4e56-902d-8e436e6e8b0d.png"
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const myProjects = [
     forks_count: 2,
     topics: ["Selenium", "Python", "Automation"],
     language: "Python",
-    image: "/assets/projects/monkeytype-bot.png"
+    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const myProjects = [
     forks_count: 3,
     topics: ["Python", "Data Analysis", "Pandas", "Matplotlib"],
     language: "Python",
-    image: "/assets/projects/fcc-data-analysis.png"
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ const myProjects = [
     forks_count: 1,
     topics: ["JavaScript", "API", "Web Development"],
     language: "JavaScript",
-    image: "/assets/projects/weather-forecast-app.png"
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ const myProjects = [
     forks_count: 4,
     topics: ["Flask", "Python", "Jinja", "Web"],
     language: "Python",
-    image: "/assets/projects/jovian-job-app.png"
+    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: 6,
@@ -77,7 +77,7 @@ const myProjects = [
     forks_count: 2,
     topics: ["AI", "LLM", "Python", "NLP"],
     language: "Python",
-    image: "/assets/projects/ai-agent.png"
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1000"
   }
 ];
 
@@ -133,16 +133,18 @@ const Projects = () => {
                 key={repo.id} 
                 ref={cardRef as React.RefObject<HTMLDivElement>}
                 className={cn(
-                  "bg-card rounded-xl overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-md hover:border-border/80 h-full flex flex-col",
+                  "bg-card rounded-xl overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-lg hover:border-primary/30 h-full flex flex-col transform hover:-translate-y-1",
                   cardIsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 )}
               >
-                <div className="relative aspect-video w-full overflow-hidden bg-muted">
+                <div className="relative aspect-video w-full overflow-hidden bg-muted group">
                   <img 
                     src={repo.image} 
                     alt={repo.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 
                 <div className="p-5 flex-grow flex flex-col">
@@ -150,14 +152,14 @@ const Projects = () => {
                   <p className="text-muted-foreground text-sm mb-4">{repo.description}</p>
                   
                   <div className="mt-auto">
-                    <div className="flex flex-wrap gap-1 mb-4">
+                    <div className="flex flex-wrap gap-1.5 mb-4">
                       {repo.topics.slice(0, 3).map(topic => (
-                        <Badge key={topic} variant="secondary" className="text-xs font-normal">
+                        <Badge key={topic} variant="secondary" className="text-xs py-1 px-2 font-normal bg-secondary/70 hover:bg-secondary/90">
                           {topic}
                         </Badge>
                       ))}
                       {repo.topics.length > 3 && (
-                        <Badge variant="outline" className="text-xs font-normal">
+                        <Badge variant="outline" className="text-xs py-1 px-2 font-normal">
                           +{repo.topics.length - 3}
                         </Badge>
                       )}
@@ -166,11 +168,11 @@ const Projects = () => {
                     <div className="flex items-center justify-between pt-3 border-t border-border/30">
                       <div className="flex items-center space-x-3">
                         <div className="flex items-center text-muted-foreground text-xs">
-                          <Star size={14} className="mr-1" /> 
+                          <Star size={14} className="mr-1 text-yellow-500" /> 
                           <span>{repo.stargazers_count}</span>
                         </div>
                         <div className="flex items-center text-muted-foreground text-xs">
-                          <GitFork size={14} className="mr-1" /> 
+                          <GitFork size={14} className="mr-1 text-primary/70" /> 
                           <span>{repo.forks_count}</span>
                         </div>
                       </div>
@@ -180,7 +182,7 @@ const Projects = () => {
                           href={repo.html_url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-muted-foreground hover:text-primary transition-colors"
+                          className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-secondary/50"
                           aria-label={`View ${repo.name} repository on GitHub`}
                         >
                           <Github size={18} />
@@ -191,7 +193,7 @@ const Projects = () => {
                             href={repo.homepage} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="text-muted-foreground hover:text-primary transition-colors"
+                            className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-secondary/50"
                             aria-label={`View live demo for ${repo.name}`}
                           >
                             <ExternalLink size={18} />

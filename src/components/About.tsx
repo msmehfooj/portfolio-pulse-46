@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 
 const About: React.FC = () => {
@@ -42,9 +43,11 @@ const About: React.FC = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent z-0"></div>
             <div className="bg-secondary/50 absolute inset-0 rounded-2xl overflow-hidden transform transition-transform duration-700 hover:scale-[0.98]">
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                Profile Image
-              </div>
+              <img 
+                src="/lovable-uploads/7674335c-d7ae-4e56-902d-8e436e6e8b0d.png" 
+                alt="Profile Image" 
+                className="w-full h-full object-cover object-center"
+              />
             </div>
           </div>
         </div>
