@@ -26,6 +26,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'San Francisco', 'SF Pro Text', 'system-ui', 'sans-serif'],
         display: ['SF Pro Display', 'San Francisco', 'system-ui', 'sans-serif'],
+        mono: ['Roboto Mono', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',
