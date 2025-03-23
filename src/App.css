@@ -29,7 +29,7 @@ body {
   animation: fade-in 0.5s ease-out forwards;
 }
 
-/* Home page grid background */
+/* Grid background patterns */
 .home-page {
   position: relative;
 }
@@ -55,4 +55,19 @@ body {
   background-image: 
     linear-gradient(rgba(20, 20, 20, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(20, 20, 20, 0.05) 1px, transparent 1px);
+}
+
+/* Static grid pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+}
+
+.light .bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
 }
