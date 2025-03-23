@@ -79,9 +79,9 @@ const Timeline: React.FC = () => {
         
         <div className="relative">
           {/* Timeline center line */}
-          <div className="absolute h-full w-0.5 bg-border left-1/2 transform -translate-x-1/2 md:block hidden"></div>
+          <div className="absolute h-full w-0.5 bg-border left-[18px] md:left-1/2 transform md:-translate-x-1/2"></div>
           
-          <div className="space-y-8 md:space-y-12 relative">
+          <div className="space-y-8 relative">
             {timelineItems.map((item, index) => (
               <motion.div 
                 key={item.id}
@@ -91,23 +91,25 @@ const Timeline: React.FC = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
                 className={cn(
-                  "relative transition-all flex",
+                  "relative flex items-start",
                   isMobile 
-                    ? "pl-[45px] flex-col" 
-                    : index % 2 === 0 
-                      ? "md:flex-row-reverse md:pr-12" 
-                      : "md:flex-row md:pl-12"
+                    ? "pl-[45px]" 
+                    : "md:justify-center md:even:flex-row-reverse",
+                  !isMobile && "md:gap-8"
                 )}
               >
                 {/* Timeline dot indicator */}
                 <div className={cn(
                   "absolute w-4 h-4 rounded-full bg-background border-2 border-primary z-10",
                   isMobile 
-                    ? "left-[18px] top-1" 
-                    : "left-1/2 transform -translate-x-1/2"
+                    ? "left-[16px] top-6" 
+                    : "left-1/2 top-6 transform -translate-x-1/2"
                 )}></div>
                 
-                <div className="bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative">
+                <div className={cn(
+                  "bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md",
+                  !isMobile && "md:w-[calc(50%-2rem)]"
+                )}>
                   <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
                   <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
                   <p className="text-pretty text-sm md:text-base">{item.description}</p>
