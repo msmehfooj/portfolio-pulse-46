@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
 
 interface TimelineItem {
   id: number;
@@ -15,90 +15,80 @@ const timelineItems: TimelineItem[] = [
     id: 1,
     title: 'Y Combinator Startup School Fellow',
     date: '2024',
-    description: 'Participated in Y Combinator\'s Startup School program, gaining insights into entrepreneurship, lean startup methodologies, and scaling strategies. Explored AI-driven startup ideas and networked with industry experts.'
+    description: "Participated in Y Combinator's Startup School program, gaining insights into entrepreneurship and AI-driven startup ideas."
   },
   {
     id: 2,
     title: 'Postman Student Expert',
     date: '2024 - Present',
-    description: 'Certified Postman Student Expert, specializing in API design, testing, and automation. Worked on real-world API integration projects, focusing on efficiency and security. Developed and tested APIs for AI-powered applications.'
+    description: "Certified Postman Student Expert specializing in API design, testing, and automation for AI-powered applications."
   },
   {
     id: 3,
     title: 'Google Cloud Arcade Facilitator',
     date: '2023 - 2024',
-    description: 'Led Google Cloud Arcade workshops on Cloud Computing, AI, and DevOps. Conducted hands-on training on Google Cloud services, APIs, and containerized applications. Explored deploying LLMs and AI models on Google Cloud.'
+    description: "Led Google Cloud Arcade workshops on Cloud Computing, AI, and DevOps. Explored deploying AI models on Google Cloud."
   },
   {
     id: 4,
     title: 'Data Analytics & Machine Learning',
     date: '2024 - Present',
-    description: 'Built data analytics projects using pandas, NumPy, and Matplotlib. Gained experience in machine learning basics, model training, and AI applications. Developed an AI-powered data visualization tool for pattern analysis.'
+    description: "Built analytics projects with Python, gaining hands-on experience in machine learning and AI-driven data visualization."
   },
   {
     id: 5,
     title: 'Open Source Contributor',
     date: '2024',
-    description: 'Contributed to open-source AI, web development, and automation projects. Maintained 67+ repositories on GitHub, covering Flask APIs, Python automation, and AI tools. Actively participated in collaborative software development with the global tech community.'
+    description: "Contributed to open-source projects, maintaining 67+ repositories covering Flask APIs, Python automation, and AI tools."
   }
 ];
 
 const Timeline: React.FC = () => {
-  const { ref: sectionRef, isVisible: sectionIsVisible } = useScrollAnimation();
-  
   return (
-    <section 
-      ref={sectionRef as React.RefObject<HTMLDivElement>}
-      className={cn(
-        "section-padding bg-muted/30",
-        sectionIsVisible ? "opacity-100" : "opacity-0 translate-y-10"
-      )}
-      style={{ transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}
-    >
+    <section className="section-padding bg-muted/30">
       <div className="container mx-auto max-w-6xl">
         <div className="mb-12 text-center">
-          <span className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag neo-effect px-3 py-1">Journey</span>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Professional Timeline</h2>
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag neo-effect px-3 py-1"
+          >Journey</motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-4xl font-bold tracking-tighter"
+          >Professional Timeline</motion.h2>
         </div>
         
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute h-full w-0.5 bg-border left-0 md:left-1/2 transform md:-translate-x-1/2 top-0"></div>
           
-          {/* Timeline items */}
           <div className="space-y-12 relative">
-            {timelineItems.map((item, index) => {
-              const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
-              
-              return (
-                <div 
-                  key={item.id}
-                  ref={ref as React.RefObject<HTMLDivElement>}
-                  className={cn(
-                    "relative md:grid md:grid-cols-2 items-center transition-all duration-700",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  )}
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-background border-2 border-primary z-10"></div>
-                  
-                  {/* Content placement based on even/odd */}
-                  <div className={cn(
-                    "pb-8 md:pb-0 md:px-12",
-                    index % 2 === 0 ? "md:text-right" : "md:col-start-2"
-                  )}>
-                    <div className="bg-card rounded-lg p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative ml-6 md:ml-0">
-                      <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                      <span className="text-sm text-muted-foreground block mb-4">{item.date}</span>
-                      <p className="text-pretty">{item.description}</p>
-                    </div>
+            {timelineItems.map((item, index) => (
+              <motion.div 
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: index * 0.2 }}
+                className={cn(
+                  "relative md:grid md:grid-cols-2 items-center transition-all",
+                  index % 2 === 0 ? "md:text-right" : "md:col-start-2"
+                )}
+              >
+                <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-background border-2 border-primary z-10"></div>
+                
+                <div className="pb-8 md:pb-0 md:px-12">
+                  <div className="bg-card rounded-lg p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative ml-6 md:ml-0">
+                    <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
+                    <span className="text-sm text-muted-foreground block mb-4">{item.date}</span>
+                    <p className="text-pretty">{item.description}</p>
                   </div>
-                  
-                  {/* Empty column for layout in larger screens */}
-                  {index % 2 === 0 && <div className="hidden md:block"></div>}
                 </div>
-              );
-            })}
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
