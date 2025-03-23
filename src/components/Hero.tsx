@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero: React.FC = () => {
-  // Refs for the elements we want to animate
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -17,7 +16,6 @@ const Hero: React.FC = () => {
   const isMobile = useIsMobile();
   
   useEffect(() => {
-    // Simple animation timing function
     const animate = (element: HTMLElement, delay: number = 0) => {
       setTimeout(() => {
         element.style.opacity = '1';
@@ -25,21 +23,11 @@ const Hero: React.FC = () => {
       }, delay);
     };
     
-    // Run animations with staggered timing
-    if (headlineRef.current) {
-      animate(headlineRef.current, 300);
-    }
-    if (textRef.current) {
-      animate(textRef.current, 500);
-    }
-    if (buttonsRef.current) {
-      animate(buttonsRef.current, 700);
-    }
-    if (backgroundRef.current) {
-      animate(backgroundRef.current, 200);
-    }
+    if (headlineRef.current) animate(headlineRef.current, 300);
+    if (textRef.current) animate(textRef.current, 500);
+    if (buttonsRef.current) animate(buttonsRef.current, 700);
+    if (backgroundRef.current) animate(backgroundRef.current, 200);
     
-    // Detect color scheme
     const detectColorScheme = () => {
       const htmlElement = document.documentElement;
       const isDark = 
@@ -52,12 +40,10 @@ const Hero: React.FC = () => {
     
     detectColorScheme();
     
-    // Listen for changes in the color scheme
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => detectColorScheme();
     mediaQuery.addEventListener('change', handleChange);
     
-    // Also check for changes to the HTML element
     const observer = new MutationObserver(detectColorScheme);
     observer.observe(document.documentElement, { 
       attributes: true, 
@@ -70,19 +56,15 @@ const Hero: React.FC = () => {
     };
   }, []);
   
-  // Animation for resume download
   const handleResumeClick = () => {
     setIsDownloading(true);
     
-    // Simulate download process
     setTimeout(() => {
       setIsDownloading(false);
       setDownloadComplete(true);
       
-      // Reset the state after a short delay
       setTimeout(() => {
         setDownloadComplete(false);
-        // Actually trigger the download
         window.open('https://drive.google.com/file/d/1RtD3L-hctEz2Wzz1_FZIFUzoaRiMM8q3/view?usp=drivesdk', '_blank');
       }, 1200);
     }, 1500);
@@ -102,45 +84,47 @@ const Hero: React.FC = () => {
       
       <div className="container max-w-6xl mx-auto px-4 z-10 pt-10">
         <div className="flex flex-col items-center justify-center text-center">
-          <div className="w-full max-w-3xl">
+          <div className="w-full max-w-3xl space-y-8 md:space-y-10">
             <h1 
               ref={headlineRef}
               className={cn(
-                "font-bold tracking-tighter mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance",
+                "font-bold tracking-tighter opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance",
                 isMobile ? "text-3xl" : "text-4xl md:text-5xl lg:text-6xl"
               )}
             >
               Building Solutions, <br /> One Line at a Time
             </h1>
             
-            <p 
-              ref={textRef}
-              className={cn(
-                "mb-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono",
-                isMobile ? "text-base" : "text-lg md:text-xl"
-              )}
-            >
-              "Just a guy who speaks fluent Python (and sometimes English)"
-            </p>
-            
-            <p 
-              className={cn(
-                "text-muted-foreground mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic",
-                isMobile ? "text-sm" : "text-base md:text-lg"
-              )}
-              style={{ animationDelay: '600ms' }}
-            >
-              I enjoy solving problems and figuring out how things work. Always curious and learning something new to improve my skills.
-            </p>
+            <div className="space-y-6 md:space-y-8">
+              <p 
+                ref={textRef}
+                className={cn(
+                  "opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono",
+                  isMobile ? "text-base" : "text-lg md:text-xl"
+                )}
+              >
+                "Just a guy who speaks fluent Python (and sometimes English)"
+              </p>
+              
+              <p 
+                className={cn(
+                  "text-muted-foreground opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic",
+                  isMobile ? "text-sm" : "text-base md:text-lg"
+                )}
+                style={{ animationDelay: '600ms' }}
+              >
+                I enjoy solving problems and figuring out how things work. Always curious and learning something new to improve my skills.
+              </p>
+            </div>
             
             <div 
               ref={buttonsRef}
-              className="flex flex-wrap justify-center gap-3 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
+              className="flex flex-wrap justify-center gap-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out pt-4"
             >
               <Button 
                 asChild
                 className={cn(
-                  "group rounded-full px-4 sm:px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  "group rounded-full px-6 py-2.5 animated-button backdrop-blur-sm border transition-all duration-300",
                   isDarkMode 
                     ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
                     : "bg-black/10 border-black/20 text-black hover:bg-black/20"
@@ -157,7 +141,7 @@ const Hero: React.FC = () => {
               <Button 
                 variant="outline" 
                 className={cn(
-                  "group rounded-full px-4 sm:px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  "group rounded-full px-6 py-2.5 animated-button backdrop-blur-sm border transition-all duration-300",
                   isDarkMode 
                     ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
                     : "bg-black/5 border-black/10 text-black hover:bg-black/10"
@@ -193,8 +177,8 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Scroll indicator - Adjusted for mobile */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle mt-12 sm:mt-16">
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle">
         <ArrowRight className={cn(
           "h-5 w-5 transform rotate-90", 
           isDarkMode ? "text-muted-foreground/50" : "text-gray-500/70"
