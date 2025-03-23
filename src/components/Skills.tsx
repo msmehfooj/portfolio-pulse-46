@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 
@@ -40,31 +39,96 @@ const skills: Skill[] = [
   { name: 'Deployment', category: 'Cloud & DevOps', level: 'intermediate' },
 ];
 
-// Using only black, white and gray colors
-const categoryColors: Record<string, string> = {
-  'Programming': 'bg-white/5 text-white border-white/20',
-  'Data & Databases': 'bg-white/10 text-white border-white/20',
-  'Machine Learning': 'bg-white/5 text-white border-white/20',
-  'Backend Development': 'bg-white/10 text-white border-white/20',
-  'Problem-Solving': 'bg-white/5 text-white border-white/20',
-  'Cloud & DevOps': 'bg-white/10 text-white border-white/20',
+// Function to get colors based on dark/light mode
+const getCategoryColors = (isDarkMode: boolean): Record<string, string> => {
+  return {
+    'Programming': isDarkMode 
+      ? 'bg-white/5 text-white border-white/20' 
+      : 'bg-black/5 text-black border-black/20',
+    'Data & Databases': isDarkMode 
+      ? 'bg-white/10 text-white border-white/20' 
+      : 'bg-black/10 text-black border-black/20',
+    'Machine Learning': isDarkMode 
+      ? 'bg-white/5 text-white border-white/20' 
+      : 'bg-black/5 text-black border-black/20',
+    'Backend Development': isDarkMode 
+      ? 'bg-white/10 text-white border-white/20' 
+      : 'bg-black/10 text-black border-black/20',
+    'Problem-Solving': isDarkMode 
+      ? 'bg-white/5 text-white border-white/20' 
+      : 'bg-black/5 text-black border-black/20',
+    'Cloud & DevOps': isDarkMode 
+      ? 'bg-white/10 text-white border-white/20' 
+      : 'bg-black/10 text-black border-black/20',
+  };
 };
 
-const levelIndicator: Record<string, { icon: string, color: string }> = {
-  'beginner': { icon: '●○○', color: 'text-gray-400' },
-  'intermediate': { icon: '●●○', color: 'text-gray-200' },
-  'advanced': { icon: '●●●', color: 'text-white' },
+// Function to get level indicator colors based on dark/light mode
+const getLevelIndicator = (isDarkMode: boolean): Record<string, { icon: string, color: string }> => {
+  return {
+    'beginner': { 
+      icon: '●○○', 
+      color: isDarkMode ? 'text-gray-400' : 'text-gray-500' 
+    },
+    'intermediate': { 
+      icon: '●●○', 
+      color: isDarkMode ? 'text-gray-200' : 'text-gray-700' 
+    },
+    'advanced': { 
+      icon: '●●●', 
+      color: isDarkMode ? 'text-white' : 'text-black' 
+    },
+  };
 };
 
 const Skills: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { ref, isVisible } = useScrollAnimation();
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  
+  // Function to detect color mode
+  useEffect(() => {
+    // Check if document exists (for SSR)
+    if (typeof window !== 'undefined') {
+      // Check for theme preference in HTML attribute or localStorage
+      const detectColorScheme = () => {
+        const htmlElement = document.documentElement;
+        const isDark = 
+          htmlElement.classList.contains('dark') || 
+          localStorage.getItem('theme') === 'dark' ||
+          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        setIsDarkMode(isDark);
+      };
+      
+      detectColorScheme();
+      
+      // Listen for changes in the color scheme
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = () => detectColorScheme();
+      mediaQuery.addEventListener('change', handleChange);
+      
+      // Also check for changes to the HTML element
+      const observer = new MutationObserver(detectColorScheme);
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+      });
+      
+      return () => {
+        mediaQuery.removeEventListener('change', handleChange);
+        observer.disconnect();
+      };
+    }
+  }, []);
   
   const filteredSkills = activeCategory 
     ? skills.filter(skill => skill.category === activeCategory) 
     : skills;
   
   const categories = Array.from(new Set(skills.map(skill => skill.category)));
+  const categoryColors = getCategoryColors(isDarkMode);
+  const levelIndicator = getLevelIndicator(isDarkMode);
   
   return (
     <section 
@@ -88,8 +152,8 @@ const Skills: React.FC = () => {
             className={cn(
               "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
               !activeCategory 
-                ? "bg-white/10 text-white border-white/20" 
-                : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
+                ? (isDarkMode ? "bg-white/10 text-white border-white/20" : "bg-black/10 text-black border-black/20")
+                : (isDarkMode ? "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10" : "bg-black/5 text-black border-black/10 hover:bg-black/10")
             )}
           >
             All
@@ -102,8 +166,8 @@ const Skills: React.FC = () => {
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
                 activeCategory === category 
-                  ? "bg-white/10 text-white border-white/20" 
-                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
+                  ? (isDarkMode ? "bg-white/10 text-white border-white/20" : "bg-black/10 text-black border-black/20") 
+                  : (isDarkMode ? "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10" : "bg-black/5 text-black border-black/10 hover:bg-black/10")
               )}
             >
               {category}
@@ -120,7 +184,10 @@ const Skills: React.FC = () => {
             return (
               <div
                 key={`${skill.category}-${skill.name}`}
-                className="glass-effect border rounded-lg p-4 transition-all duration-500 hover:shadow-lg relative overflow-hidden group transform hover:scale-105"
+                className={cn(
+                  "glass-effect border rounded-lg p-4 transition-all duration-500 hover:shadow-lg relative overflow-hidden group transform hover:scale-105",
+                  isDarkMode ? "border-white/10" : "border-black/10"
+                )}
                 style={{ 
                   animationDelay,
                   opacity: isVisible ? 1 : 0,
@@ -148,7 +215,10 @@ const Skills: React.FC = () => {
                 </div>
                 
                 {/* Animated background accent */}
-                <div className="absolute -bottom-2 -right-2 w-16 h-16 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                <div className={cn(
+                  "absolute -bottom-2 -right-2 w-16 h-16 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0",
+                  isDarkMode ? "bg-white/5" : "bg-black/5"
+                )}></div>
               </div>
             );
           })}
