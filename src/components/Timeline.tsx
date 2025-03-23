@@ -2,8 +2,8 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
-import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { motion } from 'framer-motion';
 
 interface TimelineItem {
   id: number;
@@ -45,25 +45,37 @@ const timelineItems: TimelineItem[] = [
   }
 ];
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
 const Timeline: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
     <section className="section-padding bg-muted/30">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
           <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
             transition={{ duration: 0.6 }}
             className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag neo-effect px-3 py-1"
-          >Journey</motion.span>
+          >
+            Journey
+          </motion.span>
           <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            transition={{ duration: 0.8, delay: 0.1 }}
             className="text-3xl md:text-4xl font-bold tracking-tighter"
-          >Professional Timeline</motion.h2>
+          >
+            Professional Timeline
+          </motion.h2>
         </div>
         
         <div className="relative">
@@ -73,14 +85,15 @@ const Timeline: React.FC = () => {
             isMobile ? "left-[20px]" : "left-0 md:left-1/2 transform md:-translate-x-1/2"
           )}></div>
           
-          <div className="space-y-12 relative">
+          <div className="space-y-8 md:space-y-12 relative">
             {timelineItems.map((item, index) => (
               <motion.div 
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.7, delay: index * 0.2 }}
+                variants={fadeInUp}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
                 className={cn(
                   "relative transition-all",
                   isMobile 
@@ -96,19 +109,28 @@ const Timeline: React.FC = () => {
                   "absolute w-4 h-4 rounded-full bg-background border-2 border-primary z-10",
                   isMobile 
                     ? "left-[18px] top-1" 
-                    : "left-0 md:left-1/2 transform md:-translate-x-1/2"
+                    : cn(
+                        "top-1",
+                        index % 2 === 0 
+                          ? "md:right-[-8px] right-auto" 
+                          : "md:left-[-8px] left-auto"
+                      ),
+                  !isMobile && "md:left-1/2 md:-translate-x-1/2"
                 )}></div>
                 
                 <div className={cn(
-                  isMobile ? "pb-0" : "pb-8 md:pb-0 md:px-12"
+                  isMobile ? "pb-0" : cn(
+                    "pb-8 md:pb-0",
+                    index % 2 === 0 ? "md:pr-12" : "md:pl-12"
+                  )
                 )}>
                   <div className={cn(
-                    "bg-card rounded-lg p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative",
+                    "bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative",
                     isMobile ? "" : "ml-6 md:ml-0"
                   )}>
                     <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                    <span className="text-sm text-muted-foreground block mb-4">{item.date}</span>
-                    <p className="text-pretty">{item.description}</p>
+                    <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
+                    <p className="text-pretty text-sm md:text-base">{item.description}</p>
                   </div>
                 </div>
               </motion.div>
