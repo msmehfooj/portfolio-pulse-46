@@ -24,9 +24,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'San Francisco', 'SF Pro Text', 'system-ui', 'sans-serif'],
-        display: ['SF Pro Display', 'San Francisco', 'system-ui', 'sans-serif'],
-        mono: ['Roboto Mono', 'monospace'],
+        sans: ['DM Sans', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['DM Sans', 'San Francisco', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -106,12 +106,16 @@ export default {
           '50%': { transform: 'translateY(-10px)' },
         },
         'pulse-subtle': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' },
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(0.98)' },
         },
         'blur-in': {
           '0%': { filter: 'blur(5px)', opacity: '0' },
           '100%': { filter: 'blur(0)', opacity: '1' },
+        },
+        'timeline-progress': {
+          '0%': { height: '0%' },
+          '100%': { height: '100%' },
         },
       },
       animation: {
@@ -124,8 +128,9 @@ export default {
         'scale-in': 'scale-in 0.6s ease-out forwards',
         'scale-out': 'scale-out 0.6s ease-out forwards',
         'float': 'float 6s ease-in-out infinite',
-        'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
+        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
         'blur-in': 'blur-in 0.6s ease-out forwards',
+        'timeline-progress': 'timeline-progress 2s ease-out forwards',
       },
       transitionTimingFunction: {
         'apple': 'cubic-bezier(0.42, 0, 0.58, 1)',

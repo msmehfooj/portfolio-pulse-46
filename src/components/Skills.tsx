@@ -40,19 +40,20 @@ const skills: Skill[] = [
   { name: 'Deployment', category: 'Cloud & DevOps', level: 'intermediate' },
 ];
 
+// Using only black, white and gray colors
 const categoryColors: Record<string, string> = {
-  'Programming': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
-  'Data & Databases': 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800',
-  'Machine Learning': 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800',
-  'Backend Development': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800',
-  'Problem-Solving': 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800',
-  'Cloud & DevOps': 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800',
+  'Programming': 'bg-white/5 text-white border-white/20',
+  'Data & Databases': 'bg-white/10 text-white border-white/20',
+  'Machine Learning': 'bg-white/5 text-white border-white/20',
+  'Backend Development': 'bg-white/10 text-white border-white/20',
+  'Problem-Solving': 'bg-white/5 text-white border-white/20',
+  'Cloud & DevOps': 'bg-white/10 text-white border-white/20',
 };
 
 const levelIndicator: Record<string, { icon: string, color: string }> = {
-  'beginner': { icon: '●○○', color: 'text-muted-foreground/70' },
-  'intermediate': { icon: '●●○', color: 'text-primary/80' },
-  'advanced': { icon: '●●●', color: 'text-primary' },
+  'beginner': { icon: '●○○', color: 'text-gray-400' },
+  'intermediate': { icon: '●●○', color: 'text-gray-200' },
+  'advanced': { icon: '●●●', color: 'text-white' },
 };
 
 const Skills: React.FC = () => {
@@ -76,7 +77,7 @@ const Skills: React.FC = () => {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="mb-12 text-center">
-          <span className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag neo-effect px-3 py-1">Expertise</span>
+          <span className="text-xs uppercase tracking-wider text-muted-foreground inline-block mb-2 tag glass-effect px-3 py-1">Expertise</span>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Skills & Tech Stack</h2>
         </div>
         
@@ -85,10 +86,10 @@ const Skills: React.FC = () => {
           <button
             onClick={() => setActiveCategory(null)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-medium transition-all border",
+              "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
               !activeCategory 
-                ? "bg-primary text-primary-foreground" 
-                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                ? "bg-white/10 text-white border-white/20" 
+                : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
             )}
           >
             All
@@ -99,10 +100,10 @@ const Skills: React.FC = () => {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all border",
+                "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
                 activeCategory === category 
-                  ? "bg-primary text-primary-foreground" 
-                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  ? "bg-white/10 text-white border-white/20" 
+                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
               )}
             >
               {category}
@@ -119,24 +120,24 @@ const Skills: React.FC = () => {
             return (
               <div
                 key={`${skill.category}-${skill.name}`}
-                className="bg-card border rounded-lg p-4 transition-all duration-300 hover:shadow-sm relative overflow-hidden group"
+                className="glass-effect border rounded-lg p-4 transition-all duration-500 hover:shadow-lg relative overflow-hidden group transform hover:scale-105"
                 style={{ 
                   animationDelay,
                   opacity: isVisible ? 1 : 0,
                   transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-                  transition: `opacity 0.5s ease-out ${animationDelay}, transform 0.5s ease-out ${animationDelay}` 
+                  transition: `all 0.5s ease-out ${animationDelay}` 
                 }}
               >
                 {/* Skill category badge */}
                 <span className={cn(
-                  "inline-block text-xs px-2 py-1 rounded-full border",
+                  "inline-block text-xs px-2 py-1 rounded-full border backdrop-blur-sm",
                   categoryColors[skill.category]
                 )}>
                   {skill.category}
                 </span>
                 
                 {/* Skill name */}
-                <h3 className="text-lg font-medium mt-2 mb-1">{skill.name}</h3>
+                <h3 className="text-lg font-mono mt-2 mb-1">{skill.name}</h3>
                 
                 {/* Skill level indicator */}
                 <div className={cn(
@@ -146,8 +147,8 @@ const Skills: React.FC = () => {
                   {levelIndicator[skill.level].icon}
                 </div>
                 
-                {/* Subtle background accent */}
-                <div className="absolute -bottom-2 -right-2 w-12 h-12 rounded-full bg-muted/30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                {/* Animated background accent */}
+                <div className="absolute -bottom-2 -right-2 w-16 h-16 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0"></div>
               </div>
             );
           })}
