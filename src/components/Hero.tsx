@@ -142,6 +142,7 @@ const Hero: React.FC = () => {
       {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle">
         <ArrowRight className="h-5 w-5 text-muted-foreground/50 transform rotate-90" />
+        <div> </div>
         <span className="text-xs text-muted-foreground/50 mt-2 font-mono">Scroll</span>
       </div>
     </section>
