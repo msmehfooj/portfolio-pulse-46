@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
@@ -79,11 +78,8 @@ const Timeline: React.FC = () => {
         </div>
         
         <div className="relative">
-          {/* Timeline center line - visible on all devices but adjusted for mobile */}
-          <div className={cn(
-            "absolute h-full w-0.5 bg-border top-0",
-            isMobile ? "left-[20px]" : "left-0 md:left-1/2 transform md:-translate-x-1/2"
-          )}></div>
+          {/* Timeline center line */}
+          <div className="absolute h-full w-0.5 bg-border left-1/2 transform -translate-x-1/2 md:block hidden"></div>
           
           <div className="space-y-8 md:space-y-12 relative">
             {timelineItems.map((item, index) => (
@@ -95,43 +91,26 @@ const Timeline: React.FC = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
                 className={cn(
-                  "relative transition-all",
+                  "relative transition-all flex",
                   isMobile 
-                    ? "pl-[45px]" // Fixed left padding for mobile 
-                    : cn(
-                        "md:grid md:grid-cols-2 items-center",
-                        index % 2 === 0 ? "md:text-right" : "md:col-start-2"
-                      )
+                    ? "pl-[45px] flex-col" 
+                    : index % 2 === 0 
+                      ? "md:flex-row-reverse md:pr-12" 
+                      : "md:flex-row md:pl-12"
                 )}
               >
-                {/* Timeline dot indicator - adjusted position for mobile */}
+                {/* Timeline dot indicator */}
                 <div className={cn(
                   "absolute w-4 h-4 rounded-full bg-background border-2 border-primary z-10",
                   isMobile 
                     ? "left-[18px] top-1" 
-                    : cn(
-                        "top-1",
-                        index % 2 === 0 
-                          ? "md:right-[-8px] right-auto" 
-                          : "md:left-[-8px] left-auto"
-                      ),
-                  !isMobile && "md:left-1/2 md:-translate-x-1/2"
+                    : "left-1/2 transform -translate-x-1/2"
                 )}></div>
                 
-                <div className={cn(
-                  isMobile ? "pb-0" : cn(
-                    "pb-8 md:pb-0",
-                    index % 2 === 0 ? "md:pr-12" : "md:pl-12"
-                  )
-                )}>
-                  <div className={cn(
-                    "bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative",
-                    isMobile ? "" : "ml-6 md:ml-0"
-                  )}>
-                    <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                    <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
-                    <p className="text-pretty text-sm md:text-base">{item.description}</p>
-                  </div>
+                <div className="bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative">
+                  <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
+                  <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
+                  <p className="text-pretty text-sm md:text-base">{item.description}</p>
                 </div>
               </motion.div>
             ))}
