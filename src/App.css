@@ -13,7 +13,7 @@ body {
   text-align: left;
 }
 
-/* Animation definitions */
+/* Simple animation definitions */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -27,20 +27,6 @@ body {
 
 .animate-fade-in {
   animation: fade-in 0.5s ease-out forwards;
-}
-
-/* For grid background animation */
-@keyframes grid-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.1;
-  }
-}
-
-.animate-grid-fade-in {
-  animation: grid-fade-in 1.5s ease-out forwards;
 }
 
 /* Home page grid background */
@@ -63,4 +49,10 @@ body {
   z-index: -1;
   opacity: 0.15;
   pointer-events: none;
+}
+
+.light .home-page::before {
+  background-image: 
+    linear-gradient(rgba(20, 20, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 20, 20, 0.05) 1px, transparent 1px);
 }

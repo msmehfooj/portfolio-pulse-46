@@ -8,22 +8,31 @@ const ThemeToggle: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   
   useEffect(() => {
-    // Always default to dark theme initially
-    document.documentElement.classList.add('dark');
-    
     // Check if there's a saved theme preference
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     
     if (savedTheme) {
       setTheme(savedTheme);
       document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+    } else {
+      // Default to dark theme initially
+      document.documentElement.classList.add('dark');
     }
   }, []);
   
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    
+    // Apply the theme class to the document
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+    
     localStorage.setItem('theme', newTheme);
   };
   

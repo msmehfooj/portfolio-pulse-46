@@ -26,11 +26,11 @@ const Index: React.FC = () => {
   
   return (
     <div className="min-h-screen home-page">
-      {/* Enhanced grid background with improved animation */}
-      <div className="grid-background fixed inset-0 z-0 opacity-10 pointer-events-none animate-grid-fade-in"></div>
+      {/* Simple static grid background */}
+      <div className="grid-background fixed inset-0 z-0 opacity-10 pointer-events-none"></div>
       
-      {/* Subtle gradient overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-black/40 to-transparent z-0 pointer-events-none opacity-60"></div>
+      {/* Simple gradient overlay */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black/20 to-transparent dark:from-black/40 z-0 pointer-events-none opacity-60"></div>
       
       {/* Content sections */}
       <Hero />

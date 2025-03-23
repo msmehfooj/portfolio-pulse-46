@@ -9,34 +9,34 @@
 
 @layer base {
   :root {
-    /* Modified theme to stick to black, white, gray palette */
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
+    /* Light theme variables */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
 
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 7%;
 
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 7%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 0 0% 7%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 90%;
+    --secondary-foreground: 0 0% 7%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 3.7% 90%;
+    --muted-foreground: 240 5% 35%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 240 3.7% 90%;
+    --accent-foreground: 0 0% 7%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 5% 64.9%;
+    --border: 240 3.7% 90%;
+    --input: 240 3.7% 90%;
+    --ring: 240 5% 35%;
     --radius: 0.5rem;
   }
 
@@ -86,12 +86,17 @@
     font-family: 'DM Sans', 'Inter', sans-serif;
   }
   
-  /* Improved grid pattern only to the home page */
+  /* Improved grid pattern only to the home page - simplified */
   body.home-grid-pattern {
     background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 30px 30px;
     background-position: center center;
+  }
+  
+  .light body.home-grid-pattern {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -113,21 +118,28 @@
 
 /* Enhanced glass effect */
 .glass-effect {
-  @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-apple;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  @apply bg-white/5 backdrop-blur-md border border-white/10;
+}
+
+.light .glass-effect {
+  @apply bg-black/5 backdrop-blur-md border border-black/10;
 }
 
 .neo-effect {
-  @apply bg-secondary/50 shadow-neo border border-white/5;
+  @apply bg-secondary/50 border border-white/5;
+}
+
+.light .neo-effect {
+  @apply bg-secondary/50 border border-black/5;
 }
 
 .section-padding {
   @apply py-24 px-6 lg:px-12;
 }
 
-/* Enhanced animations and transitions */
+/* Enhanced transitions */
 .transition-apple {
-  @apply transition-all duration-500 ease-apple;
+  @apply transition-all duration-500;
 }
 
 .mask-gradient-bottom {
@@ -161,6 +173,10 @@
   @apply absolute inset-0 bg-white/5 translate-x-[-100%] transition-transform duration-500;
 }
 
+.light .animated-button::before {
+  @apply bg-black/5;
+}
+
 .animated-button:hover::before {
   @apply translate-x-0;
 }
@@ -168,6 +184,10 @@
 /* Enhanced tag elements */
 .tag {
   @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm bg-white/5;
+}
+
+.light .tag {
+  @apply bg-black/5;
 }
 
 .tag:hover {
@@ -211,7 +231,16 @@
   @apply text-white font-semibold;
 }
 
-/* Timeline animation */
+.light .code-highlight {
+  @apply text-black font-semibold;
+}
+
+/* Timeline animation - simplified */
+.timeline-item {
+  opacity: 0;
+  animation: timeline-fade-in 0.6s ease-out forwards;
+}
+
 @keyframes timeline-fade-in {
   from {
     opacity: 0;
@@ -223,69 +252,31 @@
   }
 }
 
-.timeline-item {
-  animation: timeline-fade-in 0.6s ease-out forwards;
-  opacity: 0;
-}
-
 .timeline-item:nth-child(1) { animation-delay: 100ms; }
 .timeline-item:nth-child(2) { animation-delay: 200ms; }
 .timeline-item:nth-child(3) { animation-delay: 300ms; }
 .timeline-item:nth-child(4) { animation-delay: 400ms; }
 .timeline-item:nth-child(5) { animation-delay: 500ms; }
 
-/* Enhanced grid background animation */
-@keyframes grid-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.1;
-  }
+/* Simplified grid background */
+.grid-background {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
-.animate-grid-fade-in {
-  animation: grid-fade-in 1.5s ease-out forwards;
-}
-
-/* Enhanced float animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Enhanced pulse animation */
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(0.98);
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 3s ease-in-out infinite;
-}
-
-/* Additional utility classes */
-.text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/70;
+.light .grid-background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 /* Project card styles */
 .project-card {
-  @apply glass-effect rounded-xl overflow-hidden transition-all duration-500 hover:shadow-lg hover:border-white/20 transform hover:scale-[1.02];
+  @apply rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg border border-white/10 transform hover:scale-[1.02];
+}
+
+.light .project-card {
+  @apply border-black/10;
 }
 
 .project-card-image {
@@ -294,4 +285,8 @@
 
 .project-tag {
   @apply text-xs px-2 py-1 rounded-full border border-white/10 text-gray-300 mr-2 mb-2 inline-block hover:border-white/30 transition-colors;
+}
+
+.light .project-tag {
+  @apply border-black/10 text-gray-700 hover:border-black/30;
 }
