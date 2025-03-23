@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download, CheckCircle } from 'lucide-react';
@@ -13,6 +12,7 @@ const Hero: React.FC = () => {
   const backgroundRef = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadComplete, setDownloadComplete] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   
   useEffect(() => {
     // Simple animation timing function
@@ -36,6 +36,36 @@ const Hero: React.FC = () => {
     if (backgroundRef.current) {
       animate(backgroundRef.current, 200);
     }
+    
+    // Detect color scheme
+    const detectColorScheme = () => {
+      const htmlElement = document.documentElement;
+      const isDark = 
+        htmlElement.classList.contains('dark') || 
+        localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      setIsDarkMode(isDark);
+    };
+    
+    detectColorScheme();
+    
+    // Listen for changes in the color scheme
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => detectColorScheme();
+    mediaQuery.addEventListener('change', handleChange);
+    
+    // Also check for changes to the HTML element
+    const observer = new MutationObserver(detectColorScheme);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+      observer.disconnect();
+    };
   }, []);
   
   // Animation for resume download
@@ -98,7 +128,12 @@ const Hero: React.FC = () => {
             >
               <Button 
                 asChild
-                className="group rounded-full px-6 animated-button bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                className={cn(
+                  "group rounded-full px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  isDarkMode 
+                    ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    : "bg-black/10 border-black/20 text-black hover:bg-black/20"
+                )}
               >
                 <Link to="/about">
                   <span className="flex items-center">
@@ -110,13 +145,21 @@ const Hero: React.FC = () => {
               
               <Button 
                 variant="outline" 
-                className="group rounded-full px-6 animated-button bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300"
+                className={cn(
+                  "group rounded-full px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  isDarkMode 
+                    ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
+                    : "bg-black/5 border-black/10 text-black hover:bg-black/10"
+                )}
                 onClick={handleResumeClick}
                 disabled={isDownloading}
               >
                 {isDownloading ? (
                   <span className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className={cn(
+                      "animate-spin -ml-1 mr-2 h-4 w-4",
+                      isDarkMode ? "text-white" : "text-black"
+                    )} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -139,11 +182,18 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle">
-        <ArrowRight className="h-5 w-5 text-muted-foreground/50 transform rotate-90" />
-        <div> </div>
-        <span className="text-xs text-muted-foreground/50 mt-2 font-mono">Scroll</span>
+      {/* Scroll indicator - Moved further down */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle mt-16">
+        <ArrowRight className={cn(
+          "h-5 w-5 transform rotate-90", 
+          isDarkMode ? "text-muted-foreground/50" : "text-gray-500/70"
+        )} />
+        <span className={cn(
+          "text-xs mt-2 font-mono",
+          isDarkMode ? "text-muted-foreground/50" : "text-gray-500/70"
+        )}>
+          Scroll
+        </span>
       </div>
     </section>
   );
