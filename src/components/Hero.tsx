@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download, CheckCircle } from 'lucide-react';
@@ -69,8 +68,8 @@ const Hero: React.FC = () => {
       </div>
       
       <div className="container max-w-6xl mx-auto px-6 z-10 pt-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-          <div className="text-left w-full lg:w-1/2">
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="w-full max-w-3xl">
             <h1 
               ref={headlineRef}
               className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance"
@@ -80,13 +79,13 @@ const Hero: React.FC = () => {
             
             <p 
               ref={textRef}
-              className="text-lg md:text-xl mb-6 max-w-2xl opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono"
+              className="text-lg md:text-xl mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono"
             >
               "Just a guy who speaks fluent Python (and sometimes English)"
             </p>
             
             <p 
-              className="text-base md:text-lg text-muted-foreground mb-8 max-w-2xl opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic"
+              className="text-base md:text-lg text-muted-foreground mb-8 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic"
               style={{ animationDelay: '600ms' }}
             >
               I enjoy solving problems and figuring out how things work. Always curious and learning something new to improve my skills.
@@ -94,7 +93,7 @@ const Hero: React.FC = () => {
             
             <div 
               ref={buttonsRef}
-              className="flex flex-wrap gap-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
+              className="flex flex-wrap justify-center gap-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
             >
               <Button 
                 asChild
@@ -134,17 +133,6 @@ const Hero: React.FC = () => {
                   </span>
                 )}
               </Button>
-            </div>
-          </div>
-          
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-full border-4 border-white/10 shadow-2xl glass-effect transform hover:scale-105 transition-all duration-500 animate-float">
-              <img 
-                src="/lovable-uploads/f6a8c88e-b701-4377-98d4-79bea128c69a.png" 
-                alt="Profile" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
           </div>
         </div>
