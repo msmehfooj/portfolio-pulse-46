@@ -22,7 +22,7 @@ const Index: React.FC = () => {
   
   return (
     <div className="min-h-screen home-page">
-      <div className="grid-background fixed inset-0 z-0 opacity-20 pointer-events-none"></div>
+      <div className="grid-background fixed inset-0 z-0 opacity-10 pointer-events-none animate-grid-fade-in"></div>
       <Hero />
       <About />
       <Timeline />

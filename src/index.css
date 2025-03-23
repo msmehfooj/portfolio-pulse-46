@@ -85,9 +85,9 @@
   
   /* Add grid pattern only to the home page */
   body.home-grid-pattern {
-    background-image: linear-gradient(rgba(30, 30, 30, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(30, 30, 30, 0.1) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
     background-position: center center;
   }
   
@@ -150,7 +150,7 @@
 
 /* For skills and tag elements */
 .tag {
-  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-300;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm bg-white/5;
 }
 
 .tag:hover {
@@ -208,8 +208,26 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.03;
+  opacity: 0.05;
   pointer-events: none;
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Grid background animation */
+@keyframes grid-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.1;
+  }
+}
+
+.animate-grid-fade-in {
+  animation: grid-fade-in 1.5s ease-out forwards;
 }
 
 /* Additional utility classes */
@@ -219,7 +237,7 @@
 
 /* Project card styles */
 .project-card {
-  @apply bg-card border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/20;
+  @apply bg-card/40 backdrop-blur-md border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/20;
 }
 
 .project-card-image {

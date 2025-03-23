@@ -37,10 +37,10 @@ const Contact: React.FC = () => {
   };
   
   const socialLinks = [
-    { name: 'GitHub', icon: Github, url: 'https://github.com/mehfoojkkhan' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/mehfoojkkhan' },
-    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/mehfoojkkhan' },
-    { name: 'Email', icon: Mail, url: 'mailto:hello@mehfoojkhan.com' },
+    { name: 'GitHub', icon: Github, url: 'https://github.com/Savvythelegend' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/mehfooj-a-b6aa0b243?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
+    { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/Mehfooj194108' },
+    { name: 'Email', icon: Mail, url: 'mailto:hello@savvylegend.com' },
   ];
   
   return (

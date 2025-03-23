@@ -17,7 +17,7 @@ const myProjects = [
     forks_count: 5,
     topics: ["AI", "NLP", "Python", "Flask"],
     language: "Python",
-    image: "/lovable-uploads/7674335c-d7ae-4e56-902d-8e436e6e8b0d.png"
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: 2,
@@ -133,7 +133,7 @@ const Projects = () => {
                 key={repo.id} 
                 ref={cardRef as React.RefObject<HTMLDivElement>}
                 className={cn(
-                  "bg-card rounded-xl overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-lg hover:border-primary/30 h-full flex flex-col transform hover:-translate-y-1",
+                  "rounded-xl overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-lg hover:border-primary/30 h-full flex flex-col transform hover:-translate-y-1 backdrop-blur-md bg-white/5 glass-effect",
                   cardIsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 )}
               >
@@ -147,25 +147,25 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 
-                <div className="p-5 flex-grow flex flex-col">
+                <div className="p-5 flex-grow flex flex-col backdrop-blur-sm bg-card/30">
                   <h3 className="text-xl font-semibold mb-2 text-foreground">{repo.name}</h3>
                   <p className="text-muted-foreground text-sm mb-4">{repo.description}</p>
                   
                   <div className="mt-auto">
                     <div className="flex flex-wrap gap-1.5 mb-4">
                       {repo.topics.slice(0, 3).map(topic => (
-                        <Badge key={topic} variant="secondary" className="text-xs py-1 px-2 font-normal bg-secondary/70 hover:bg-secondary/90">
+                        <Badge key={topic} variant="secondary" className="text-xs py-1 px-2 font-normal bg-white/5 hover:bg-white/10 backdrop-blur-sm">
                           {topic}
                         </Badge>
                       ))}
                       {repo.topics.length > 3 && (
-                        <Badge variant="outline" className="text-xs py-1 px-2 font-normal">
+                        <Badge variant="outline" className="text-xs py-1 px-2 font-normal backdrop-blur-sm bg-white/5">
                           +{repo.topics.length - 3}
                         </Badge>
                       )}
                     </div>
                     
-                    <div className="flex items-center justify-between pt-3 border-t border-border/30">
+                    <div className="flex items-center justify-between pt-3 border-t border-border/20">
                       <div className="flex items-center space-x-3">
                         <div className="flex items-center text-muted-foreground text-xs">
                           <Star size={14} className="mr-1 text-yellow-500" /> 
@@ -182,7 +182,7 @@ const Projects = () => {
                           href={repo.html_url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-secondary/50"
+                          className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-white/10"
                           aria-label={`View ${repo.name} repository on GitHub`}
                         >
                           <Github size={18} />
@@ -193,7 +193,7 @@ const Projects = () => {
                             href={repo.homepage} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-secondary/50"
+                            className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-full hover:bg-white/10"
                             aria-label={`View live demo for ${repo.name}`}
                           >
                             <ExternalLink size={18} />
