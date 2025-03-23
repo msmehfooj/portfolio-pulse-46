@@ -79,9 +79,12 @@ const Timeline: React.FC = () => {
         
         <div className="relative">
           {/* Timeline center line */}
-          <div className="absolute h-full w-0.5 bg-border left-[18px] md:left-1/2 transform md:-translate-x-1/2"></div>
+          <div className={cn(
+            "absolute h-full w-0.5 bg-border",
+            isMobile ? "left-[18px]" : "left-1/2 transform -translate-x-1/2"
+          )}></div>
           
-          <div className="space-y-8 relative">
+          <div className="space-y-12">
             {timelineItems.map((item, index) => (
               <motion.div 
                 key={item.id}
@@ -91,28 +94,30 @@ const Timeline: React.FC = () => {
                 variants={fadeInUp}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
                 className={cn(
-                  "relative flex items-start",
-                  isMobile 
-                    ? "pl-[45px]" 
-                    : "md:justify-center md:even:flex-row-reverse",
-                  !isMobile && "md:gap-8"
+                  "relative",
+                  isMobile ? "ml-[45px]" : "flex justify-center items-start"
                 )}
               >
                 {/* Timeline dot indicator */}
                 <div className={cn(
                   "absolute w-4 h-4 rounded-full bg-background border-2 border-primary z-10",
                   isMobile 
-                    ? "left-[16px] top-6" 
-                    : "left-1/2 top-6 transform -translate-x-1/2"
+                    ? "-left-[27px] top-6" 
+                    : "left-1/2 top-6 -translate-x-1/2"
                 )}></div>
                 
+                {/* Content container */}
                 <div className={cn(
-                  "bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md",
-                  !isMobile && "md:w-[calc(50%-2rem)]"
+                  "relative",
+                  !isMobile && "w-1/2",
+                  !isMobile && index % 2 === 0 && "pr-12 ml-auto",
+                  !isMobile && index % 2 === 1 && "pl-12 mr-auto"
                 )}>
-                  <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                  <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
-                  <p className="text-pretty text-sm md:text-base">{item.description}</p>
+                  <div className="bg-card rounded-lg p-5 md:p-6 shadow-sm border transition-all duration-300 hover:shadow-md">
+                    <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
+                    <span className="text-sm text-muted-foreground block mb-3 md:mb-4">{item.date}</span>
+                    <p className="text-pretty text-sm md:text-base">{item.description}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
