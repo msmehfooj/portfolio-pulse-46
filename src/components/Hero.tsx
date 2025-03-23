@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Download, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero: React.FC = () => {
   // Refs for the elements we want to animate
@@ -13,6 +14,7 @@ const Hero: React.FC = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadComplete, setDownloadComplete] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     // Simple animation timing function
@@ -98,25 +100,34 @@ const Hero: React.FC = () => {
         <div className="absolute bottom-[-200px] right-[-300px] w-[600px] h-[600px] bg-gradient-to-tr from-white/5 to-transparent rounded-full filter blur-3xl"></div>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-6 z-10 pt-10">
+      <div className="container max-w-6xl mx-auto px-4 z-10 pt-10">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="w-full max-w-3xl">
             <h1 
               ref={headlineRef}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance"
+              className={cn(
+                "font-bold tracking-tighter mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-balance",
+                isMobile ? "text-3xl" : "text-4xl md:text-5xl lg:text-6xl"
+              )}
             >
               Building Solutions, <br /> One Line at a Time
             </h1>
             
             <p 
               ref={textRef}
-              className="text-lg md:text-xl mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono"
+              className={cn(
+                "mb-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty font-mono",
+                isMobile ? "text-base" : "text-lg md:text-xl"
+              )}
             >
               "Just a guy who speaks fluent Python (and sometimes English)"
             </p>
             
             <p 
-              className="text-base md:text-lg text-muted-foreground mb-8 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic"
+              className={cn(
+                "text-muted-foreground mb-6 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out text-pretty italic",
+                isMobile ? "text-sm" : "text-base md:text-lg"
+              )}
               style={{ animationDelay: '600ms' }}
             >
               I enjoy solving problems and figuring out how things work. Always curious and learning something new to improve my skills.
@@ -124,12 +135,12 @@ const Hero: React.FC = () => {
             
             <div 
               ref={buttonsRef}
-              className="flex flex-wrap justify-center gap-4 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
+              className="flex flex-wrap justify-center gap-3 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
             >
               <Button 
                 asChild
                 className={cn(
-                  "group rounded-full px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  "group rounded-full px-4 sm:px-6 animated-button backdrop-blur-sm border transition-all duration-300",
                   isDarkMode 
                     ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
                     : "bg-black/10 border-black/20 text-black hover:bg-black/20"
@@ -146,7 +157,7 @@ const Hero: React.FC = () => {
               <Button 
                 variant="outline" 
                 className={cn(
-                  "group rounded-full px-6 animated-button backdrop-blur-sm border transition-all duration-300",
+                  "group rounded-full px-4 sm:px-6 animated-button backdrop-blur-sm border transition-all duration-300",
                   isDarkMode 
                     ? "bg-white/5 border-white/10 text-white hover:bg-white/10"
                     : "bg-black/5 border-black/10 text-black hover:bg-black/10"
@@ -182,8 +193,8 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Scroll indicator - Moved further down */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle mt-16">
+      {/* Scroll indicator - Adjusted for mobile */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle mt-12 sm:mt-16">
         <ArrowRight className={cn(
           "h-5 w-5 transform rotate-90", 
           isDarkMode ? "text-muted-foreground/50" : "text-gray-500/70"

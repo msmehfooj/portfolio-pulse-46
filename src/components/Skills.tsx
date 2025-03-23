@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Skill {
   name: string;
@@ -85,6 +86,7 @@ const Skills: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { ref, isVisible } = useScrollAnimation();
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const isMobile = useIsMobile();
   
   // Function to detect color mode
   useEffect(() => {
@@ -145,12 +147,15 @@ const Skills: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Skills & Tech Stack</h2>
         </div>
         
-        {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
+        {/* Category filter - scrollable container for mobile */}
+        <div className={cn(
+          "flex gap-3 mb-10",
+          isMobile ? "overflow-x-auto pb-3 justify-start flex-nowrap" : "flex-wrap justify-center"
+        )}>
           <button
             onClick={() => setActiveCategory(null)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
+              "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm whitespace-nowrap",
               !activeCategory 
                 ? (isDarkMode ? "bg-white/10 text-white border-white/20" : "bg-black/10 text-black border-black/20")
                 : (isDarkMode ? "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10" : "bg-black/5 text-black border-black/10 hover:bg-black/10")
@@ -164,7 +169,7 @@ const Skills: React.FC = () => {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm",
+                "px-4 py-2 rounded-full text-sm font-medium transition-all border backdrop-blur-sm whitespace-nowrap",
                 activeCategory === category 
                   ? (isDarkMode ? "bg-white/10 text-white border-white/20" : "bg-black/10 text-black border-black/20") 
                   : (isDarkMode ? "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10" : "bg-black/5 text-black border-black/10 hover:bg-black/10")
@@ -175,7 +180,7 @@ const Skills: React.FC = () => {
           ))}
         </div>
         
-        {/* Skills grid */}
+        {/* Skills grid - adjusted for mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredSkills.map((skill, index) => {
             // Create staggered animation delays

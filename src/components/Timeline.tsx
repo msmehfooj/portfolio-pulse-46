@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TimelineItem {
   id: number;
@@ -44,6 +46,8 @@ const timelineItems: TimelineItem[] = [
 ];
 
 const Timeline: React.FC = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <section className="section-padding bg-muted/30">
       <div className="container mx-auto max-w-6xl">
@@ -63,7 +67,11 @@ const Timeline: React.FC = () => {
         </div>
         
         <div className="relative">
-          <div className="absolute h-full w-0.5 bg-border left-0 md:left-1/2 transform md:-translate-x-1/2 top-0"></div>
+          {/* Timeline center line - visible on all devices but adjusted for mobile */}
+          <div className={cn(
+            "absolute h-full w-0.5 bg-border top-0",
+            isMobile ? "left-[20px]" : "left-0 md:left-1/2 transform md:-translate-x-1/2"
+          )}></div>
           
           <div className="space-y-12 relative">
             {timelineItems.map((item, index) => (
@@ -74,14 +82,30 @@ const Timeline: React.FC = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, delay: index * 0.2 }}
                 className={cn(
-                  "relative md:grid md:grid-cols-2 items-center transition-all",
-                  index % 2 === 0 ? "md:text-right" : "md:col-start-2"
+                  "relative transition-all",
+                  isMobile 
+                    ? "pl-[45px]" // Fixed left padding for mobile 
+                    : cn(
+                        "md:grid md:grid-cols-2 items-center",
+                        index % 2 === 0 ? "md:text-right" : "md:col-start-2"
+                      )
                 )}
               >
-                <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-background border-2 border-primary z-10"></div>
+                {/* Timeline dot indicator - adjusted position for mobile */}
+                <div className={cn(
+                  "absolute w-4 h-4 rounded-full bg-background border-2 border-primary z-10",
+                  isMobile 
+                    ? "left-[18px] top-1" 
+                    : "left-0 md:left-1/2 transform md:-translate-x-1/2"
+                )}></div>
                 
-                <div className="pb-8 md:pb-0 md:px-12">
-                  <div className="bg-card rounded-lg p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative ml-6 md:ml-0">
+                <div className={cn(
+                  isMobile ? "pb-0" : "pb-8 md:pb-0 md:px-12"
+                )}>
+                  <div className={cn(
+                    "bg-card rounded-lg p-6 shadow-sm border transition-all duration-300 hover:shadow-md relative",
+                    isMobile ? "" : "ml-6 md:ml-0"
+                  )}>
                     <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
                     <span className="text-sm text-muted-foreground block mb-4">{item.date}</span>
                     <p className="text-pretty">{item.description}</p>

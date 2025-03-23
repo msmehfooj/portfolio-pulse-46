@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const myProjects = [
   {
@@ -85,6 +86,7 @@ const Projects = () => {
   const [visibleProjects, setVisibleProjects] = useState(6);
   const [activeFilter, setActiveFilter] = useState('All Projects');
   const { ref, isVisible } = useScrollAnimation();
+  const isMobile = useIsMobile();
   
   const filters = ['All Projects', 'AI', 'Web Development', 'Data Analysis', 'Automation'];
   
@@ -108,14 +110,18 @@ const Projects = () => {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">My Projects</h2>
         </div>
         
-        <div className="flex justify-center flex-wrap gap-3 my-6">
+        {/* Filter buttons - scrollable on mobile */}
+        <div className={cn(
+          "flex gap-3 my-6",
+          isMobile ? "overflow-x-auto pb-3 justify-start flex-nowrap" : "flex-wrap justify-center" 
+        )}>
           {filters.map(filter => (
             <Button 
               key={filter} 
               onClick={() => setActiveFilter(filter)} 
               variant={activeFilter === filter ? "default" : "outline"} 
               className={cn(
-                "rounded-full text-sm font-medium transition-all",
+                "rounded-full text-sm font-medium transition-all whitespace-nowrap",
                 activeFilter === filter ? "bg-primary text-primary-foreground" : "hover:bg-secondary/80"
               )}
             >
@@ -124,6 +130,7 @@ const Projects = () => {
           ))}
         </div>
         
+        {/* Projects grid - single column on mobile */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {filteredProjects.map(repo => {
             const { ref: cardRef, isVisible: cardIsVisible } = useScrollAnimation();
@@ -153,14 +160,14 @@ const Projects = () => {
                   
                   <div className="mt-auto">
                     <div className="flex flex-wrap gap-1.5 mb-4">
-                      {repo.topics.slice(0, 3).map(topic => (
+                      {repo.topics.slice(0, isMobile ? 2 : 3).map(topic => (
                         <Badge key={topic} variant="secondary" className="text-xs py-1 px-2 font-normal bg-white/5 hover:bg-white/10 backdrop-blur-sm">
                           {topic}
                         </Badge>
                       ))}
-                      {repo.topics.length > 3 && (
+                      {repo.topics.length > (isMobile ? 2 : 3) && (
                         <Badge variant="outline" className="text-xs py-1 px-2 font-normal backdrop-blur-sm bg-white/5">
-                          +{repo.topics.length - 3}
+                          +{repo.topics.length - (isMobile ? 2 : 3)}
                         </Badge>
                       )}
                     </div>
