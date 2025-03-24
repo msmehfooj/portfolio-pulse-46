@@ -27,9 +27,8 @@ const About: React.FC = () => {
           <div className="space-y-6">
             <p className="text-lg text-pretty">
               I enjoy solving problems and figuring out how things work</p>
-            
             <p className="text-muted-foreground text-pretty italic">
-Always curious and learning something new to improve my skills.</p>
+Always curious and learning something new to improve my skills...</p>
           </div>
           
           <div 
