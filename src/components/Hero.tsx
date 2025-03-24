@@ -120,7 +120,7 @@ const Hero: React.FC = () => {
                 isMobile ? "text-base" : "text-lg md:text-xl"
               )}
             >
-              "Just a guy who speaks fluent Python (and sometimes English)"
+              Just a guy who speaks fluent Python (and sometimes English)
             </p>
             
             <p 
