@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
               mehfooj.
             </Link>
             <p className="text-sm text-muted-foreground mt-2">
-              Python developer specializing in backend development
+              Applying gradient descent to my skills—slowly but surely improving.
             </p>
           </div>
           
