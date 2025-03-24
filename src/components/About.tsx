@@ -26,12 +26,10 @@ const About: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <p className="text-lg text-pretty">
-              I am a Python developer passionate about backend development, machine learning, cloud computing, and problem-solving. My focus is on building robust APIs, data analysis tools, and backend systems.
-            </p>
+              I enjoy solving problems and figuring out how things work</p>
             
             <p className="text-muted-foreground text-pretty italic">
-              With a background in software development, I'm exploring new technologies to create efficient solutions.
-            </p>
+Always curious and learning something new to improve my skills.</p>
           </div>
           
           <div 
